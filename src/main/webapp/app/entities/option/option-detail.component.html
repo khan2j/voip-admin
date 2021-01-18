@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="option">
+            <h2><span jhiTranslate="voipadminApp.option.detail.title">Option</span> {{ option.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="voipadminApp.option.code">Code</span></dt>
+                <dd>
+                    <span>{{ option.code }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.option.descr">Descr</span></dt>
+                <dd>
+                    <span>{{ option.descr }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.option.valueType">Value Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'voipadminApp.OptionValueType.' + option.valueType }}">{{ option.valueType }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.option.multiple">Multiple</span></dt>
+                <dd>
+                    <span>{{ option.multiple }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.option.models">Models</span></dt>
+                <dd>
+                    <span *ngFor="let models of option.models; let last = last">
+                        <a [routerLink]="['/device-model', models?.id, 'view']">{{ models.name }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/option', option.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "voipadminApp": {
+    "setting": {
+      "home": {
+        "title": "Settings",
+        "createLabel": "Создать новый Setting",
+        "createOrEditLabel": "Создать или отредактировать Setting",
+        "notFound": "No Settings found"
+      },
+      "created": "Новый Setting создан с идентификатором {{ param }}",
+      "updated": "Setting обновлен с идентификатором {{ param }}",
+      "deleted": "Setting удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Setting {{ id }}?"
+      },
+      "detail": {
+        "title": "Setting"
+      },
+      "textValue": "Text Value",
+      "option": "Option",
+      "selectedValues": "Selected Values",
+      "device": "Device"
+    }
+  }
+}

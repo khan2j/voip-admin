@@ -1,0 +1,33 @@
+{
+  "name": "AsteriskAccount",
+  "fields": [
+    {
+      "fieldName": "username",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "asteriskId",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "voipAccount",
+      "otherEntityRelationshipName": "asteriskAccount",
+      "relationshipName": "voipAccount",
+      "ownerSide": false
+    }
+  ],
+  "changelogDate": "20210118030551",
+  "entityTableName": "asterisk_account",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

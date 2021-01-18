@@ -1,0 +1,49 @@
+{
+  "name": "Option",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "valueType",
+      "fieldType": "OptionValueType",
+      "fieldValues": "TEXT,SELECT"
+    },
+    {
+      "fieldName": "multiple",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "optionValue",
+      "otherEntityRelationshipName": "option",
+      "relationshipName": "possibleValues"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "deviceModel",
+      "otherEntityRelationshipName": "options",
+      "relationshipName": "models",
+      "otherEntityField": "name",
+      "ownerSide": true
+    }
+  ],
+  "changelogDate": "20210118030751",
+  "entityTableName": "option",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

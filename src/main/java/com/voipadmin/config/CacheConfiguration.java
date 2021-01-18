@@ -48,6 +48,24 @@ public class CacheConfiguration {
             createCache(cm, com.voipadmin.domain.User.class.getName());
             createCache(cm, com.voipadmin.domain.Authority.class.getName());
             createCache(cm, com.voipadmin.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.voipadmin.domain.Device.class.getName());
+            createCache(cm, com.voipadmin.domain.Device.class.getName() + ".settings");
+            createCache(cm, com.voipadmin.domain.Device.class.getName() + ".voipAccounts");
+            createCache(cm, com.voipadmin.domain.Device.class.getName() + ".children");
+            createCache(cm, com.voipadmin.domain.DeviceModel.class.getName());
+            createCache(cm, com.voipadmin.domain.DeviceModel.class.getName() + ".options");
+            createCache(cm, com.voipadmin.domain.OtherDeviceType.class.getName());
+            createCache(cm, com.voipadmin.domain.ResponsiblePerson.class.getName());
+            createCache(cm, com.voipadmin.domain.Department.class.getName());
+            createCache(cm, com.voipadmin.domain.VoipAccount.class.getName());
+            createCache(cm, com.voipadmin.domain.AsteriskAccount.class.getName());
+            createCache(cm, com.voipadmin.domain.Setting.class.getName());
+            createCache(cm, com.voipadmin.domain.Setting.class.getName() + ".selectedValues");
+            createCache(cm, com.voipadmin.domain.Option.class.getName());
+            createCache(cm, com.voipadmin.domain.Option.class.getName() + ".possibleValues");
+            createCache(cm, com.voipadmin.domain.Option.class.getName() + ".models");
+            createCache(cm, com.voipadmin.domain.OptionValue.class.getName());
+            createCache(cm, com.voipadmin.domain.OptionValue.class.getName() + ".settings");
             // jhipster-needle-ehcache-add-entry
         };
     }

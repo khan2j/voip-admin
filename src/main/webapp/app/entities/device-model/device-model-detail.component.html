@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="deviceModel">
+            <h2><span jhiTranslate="voipadminApp.deviceModel.detail.title">Device Model</span> {{ deviceModel.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="voipadminApp.deviceModel.name">Name</span></dt>
+                <dd>
+                    <span>{{ deviceModel.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.deviceModel.isConfigurable">Is Configurable</span></dt>
+                <dd>
+                    <span>{{ deviceModel.isConfigurable }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.deviceModel.linesCount">Lines Count</span></dt>
+                <dd>
+                    <span>{{ deviceModel.linesCount }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.deviceModel.configTemplate">Config Template</span></dt>
+                <dd>
+                    <div *ngIf="deviceModel.configTemplate">
+                        <a (click)="openFile(deviceModel.configTemplateContentType, deviceModel.configTemplate)" jhiTranslate="entity.action.open">open</a>
+                        {{ deviceModel.configTemplateContentType }}, {{ byteSize(deviceModel.configTemplate) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.deviceModel.firmwareFile">Firmware File</span></dt>
+                <dd>
+                    <div *ngIf="deviceModel.firmwareFile">
+                        <a (click)="openFile(deviceModel.firmwareFileContentType, deviceModel.firmwareFile)" jhiTranslate="entity.action.open">open</a>
+                        {{ deviceModel.firmwareFileContentType }}, {{ byteSize(deviceModel.firmwareFile) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.deviceModel.deviceType">Device Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'voipadminApp.DeviceType.' + deviceModel.deviceType }}">{{ deviceModel.deviceType }}</span>
+                </dd>
+                <dt><span jhiTranslate="voipadminApp.deviceModel.otherDeviceType">Other Device Type</span></dt>
+                <dd>
+                    <div *ngIf="deviceModel.otherDeviceTypeId">
+                        <a [routerLink]="['/other-device-type', deviceModel.otherDeviceTypeId, 'view']">{{ deviceModel.otherDeviceTypeId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/device-model', deviceModel.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,24 @@
     <property name="uuidType" value="uuid" dbms="h2, postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118025951_added_entity_Device.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030051_added_entity_DeviceModel.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030151_added_entity_OtherDeviceType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030251_added_entity_ResponsiblePerson.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030351_added_entity_Department.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030451_added_entity_VoipAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030551_added_entity_AsteriskAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030651_added_entity_Setting.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030751_added_entity_Option.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030851_added_entity_OptionValue.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20210118025951_added_entity_constraints_Device.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030051_added_entity_constraints_DeviceModel.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030251_added_entity_constraints_ResponsiblePerson.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030451_added_entity_constraints_VoipAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030651_added_entity_constraints_Setting.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030751_added_entity_constraints_Option.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210118030851_added_entity_constraints_OptionValue.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

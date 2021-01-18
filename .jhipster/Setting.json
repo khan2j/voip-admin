@@ -1,0 +1,44 @@
+{
+  "name": "Setting",
+  "fields": [
+    {
+      "fieldName": "textValue",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "option",
+      "otherEntityRelationshipName": "setting",
+      "relationshipName": "option",
+      "otherEntityField": "code"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "optionValue",
+      "otherEntityRelationshipName": "settings",
+      "relationshipName": "selectedValues",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "device",
+      "otherEntityRelationshipName": "settings",
+      "relationshipName": "device",
+      "otherEntityField": "mac"
+    }
+  ],
+  "changelogDate": "20210118030651",
+  "entityTableName": "setting",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

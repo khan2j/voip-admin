@@ -1,0 +1,11 @@
+id;name;is_configurable;lines_count;config_template;config_template_content_type;firmware_file;firmware_file_content_type;device_type
+1;Pants;false;77002;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;HEADSET
+2;multi-byte Bedfordshire;true;93794;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;IPPHONE
+3;Infrastructure Developer;true;49276;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;HEADSET
+4;bluetooth Ball bypassing;false;41039;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;IPPHONE
+5;Strategist killer;true;92380;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;IPPHONE
+6;index Gorgeous Wooden Fish;true;11448;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;HANDSET
+7;backing up;true;35393;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;IPPHONE
+8;Hryvnia Georgia;false;80184;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;HEADSET
+9;solid state Gorgeous purple;true;40049;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;HANDSET
+10;Analyst;false;14295;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.png;image/png;IPGATEWAY
