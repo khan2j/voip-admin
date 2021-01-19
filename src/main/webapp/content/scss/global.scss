@@ -1,6 +1,7 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 /* ==============================================================
 Bootstrap tweaks
@@ -193,3 +194,7 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.tab-content {
+  margin-top: 20px;
+}
