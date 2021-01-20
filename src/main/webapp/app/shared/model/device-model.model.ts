@@ -12,6 +12,7 @@ export interface IDeviceModel {
   firmwareFile?: any;
   deviceType?: DeviceType;
   otherDeviceTypeId?: number;
+  otherDeviceTypeName?: string;
   options?: IOption[];
 }
 

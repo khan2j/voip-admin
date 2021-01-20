@@ -13,6 +13,7 @@ import org.mapstruct.*;
 public interface DeviceModelMapper extends EntityMapper<DeviceModelDTO, DeviceModel> {
 
     @Mapping(source = "otherDeviceType.id", target = "otherDeviceTypeId")
+    @Mapping(source = "otherDeviceType.name", target = "otherDeviceTypeName")
     DeviceModelDTO toDto(DeviceModel deviceModel);
 
     @Mapping(source = "otherDeviceTypeId", target = "otherDeviceType")

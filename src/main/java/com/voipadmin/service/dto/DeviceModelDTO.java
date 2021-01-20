@@ -9,7 +9,7 @@ import com.voipadmin.domain.enumeration.DeviceType;
  * A DTO for the {@link com.voipadmin.domain.DeviceModel} entity.
  */
 public class DeviceModelDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -32,7 +32,8 @@ public class DeviceModelDTO implements Serializable {
 
 
     private Long otherDeviceTypeId;
-    
+    private String otherDeviceTypeName;
+
     public Long getId() {
         return id;
     }
@@ -111,6 +112,14 @@ public class DeviceModelDTO implements Serializable {
 
     public void setOtherDeviceTypeId(Long otherDeviceTypeId) {
         this.otherDeviceTypeId = otherDeviceTypeId;
+    }
+
+    public String getOtherDeviceTypeName() {
+        return otherDeviceTypeName;
+    }
+
+    public void setOtherDeviceTypeName(String otherDeviceTypeName) {
+        this.otherDeviceTypeName = otherDeviceTypeName;
     }
 
     @Override
