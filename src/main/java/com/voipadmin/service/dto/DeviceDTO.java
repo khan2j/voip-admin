@@ -8,7 +8,7 @@ import com.voipadmin.domain.enumeration.ProvisioningMode;
  * A DTO for the {@link com.voipadmin.domain.Device} entity.
  */
 public class DeviceDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -53,8 +53,10 @@ public class DeviceDTO implements Serializable {
 
     private String responsiblePersonLastName;
 
+    private String responsiblePersonFullName;
+
     private Long parentId;
-    
+
     public Long getId() {
         return id;
     }
@@ -221,6 +223,14 @@ public class DeviceDTO implements Serializable {
 
     public void setResponsiblePersonLastName(String responsiblePersonLastName) {
         this.responsiblePersonLastName = responsiblePersonLastName;
+    }
+
+    public String getResponsiblePersonFullName() {
+        return responsiblePersonFullName;
+    }
+
+    public void setResponsiblePersonFullName(String responsiblePersonFullName) {
+        this.responsiblePersonFullName = responsiblePersonFullName;
     }
 
     public Long getParentId() {

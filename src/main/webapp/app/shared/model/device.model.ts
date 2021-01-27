@@ -26,6 +26,7 @@ export interface IDevice {
   modelName?: string;
   modelId?: number;
   responsiblePersonLastName?: string;
+  responsiblePersonFullName?: string;
   responsiblePersonId?: number;
   parentId?: number;
 }
@@ -55,6 +56,7 @@ export class Device implements IDevice {
     public modelName?: string,
     public modelId?: number,
     public responsiblePersonLastName?: string,
+    public responsiblePersonFullName?: string,
     public responsiblePersonId?: number,
     public parentId?: number
   ) {

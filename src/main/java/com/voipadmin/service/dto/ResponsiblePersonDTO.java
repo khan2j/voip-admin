@@ -7,7 +7,7 @@ import java.io.Serializable;
  * A DTO for the {@link com.voipadmin.domain.ResponsiblePerson} entity.
  */
 public class ResponsiblePersonDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -21,6 +21,8 @@ public class ResponsiblePersonDTO implements Serializable {
     @NotNull
     private String lastName;
 
+    private String fullName;
+
     private String position;
 
     private String room;
@@ -29,7 +31,7 @@ public class ResponsiblePersonDTO implements Serializable {
     private Long departmentId;
 
     private String departmentName;
-    
+
     public Long getId() {
         return id;
     }
@@ -68,6 +70,14 @@ public class ResponsiblePersonDTO implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPosition() {

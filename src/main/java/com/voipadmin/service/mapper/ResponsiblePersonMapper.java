@@ -2,9 +2,16 @@ package com.voipadmin.service.mapper;
 
 
 import com.voipadmin.domain.*;
+import com.voipadmin.service.dto.DeviceDTO;
 import com.voipadmin.service.dto.ResponsiblePersonDTO;
 
 import org.mapstruct.*;
+
+import java.text.MessageFormat;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static liquibase.util.StringUtils.isNotEmpty;
 
 /**
  * Mapper for the entity {@link ResponsiblePerson} and its DTO {@link ResponsiblePersonDTO}.
@@ -26,5 +33,16 @@ public interface ResponsiblePersonMapper extends EntityMapper<ResponsiblePersonD
         ResponsiblePerson responsiblePerson = new ResponsiblePerson();
         responsiblePerson.setId(id);
         return responsiblePerson;
+    }
+
+    @AfterMapping
+    default void setResponsiblePersonFullName(@MappingTarget ResponsiblePersonDTO dto, ResponsiblePerson entity) {
+        dto.setFullName(MessageFormat.format(
+            "{0} {1}{2}",
+            entity.getLastName(),
+            isNotEmpty(entity.getFirstName()) ? entity.getFirstName().substring(0, 1) + "." : "",
+            isNotEmpty(entity.getFirstName()) && isNotEmpty(entity.getSecondName()) ?
+                entity.getSecondName().substring(0, 1) + "." : ""
+        ));
     }
 }

@@ -4,6 +4,7 @@ export interface IResponsiblePerson {
   firstName?: string;
   secondName?: string;
   lastName?: string;
+  fullName?: string;
   position?: string;
   room?: string;
   departmentName?: string;
@@ -17,6 +18,7 @@ export class ResponsiblePerson implements IResponsiblePerson {
     public firstName?: string,
     public secondName?: string,
     public lastName?: string,
+    public fullName?: string,
     public position?: string,
     public room?: string,
     public departmentName?: string,
