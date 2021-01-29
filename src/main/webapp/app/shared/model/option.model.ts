@@ -10,6 +10,7 @@ export interface IOption {
   multiple?: boolean;
   possibleValues?: IOptionValue[];
   models?: IDeviceModel[];
+  codeWithDescr?: string;
 }
 
 export class Option implements IOption {
@@ -20,7 +21,8 @@ export class Option implements IOption {
     public valueType?: OptionValueType,
     public multiple?: boolean,
     public possibleValues?: IOptionValue[],
-    public models?: IDeviceModel[]
+    public models?: IDeviceModel[],
+    public codeWithDescr?: string
   ) {
     this.multiple = this.multiple || false;
   }

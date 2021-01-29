@@ -12,6 +12,25 @@
                             <jhi-alert-error></jhi-alert-error>
 
                             <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.deviceType" for="field_deviceType">Device Type</label>
+                                <select class="form-control" name="deviceType" formControlName="deviceType" id="field_deviceType">
+                                    <option value="IPPHONE">{{ 'voipadminApp.DeviceType.IPPHONE' | translate }}</option>
+                                    <option value="IPGATEWAY">{{ 'voipadminApp.DeviceType.IPGATEWAY' | translate }}</option>
+                                    <option value="HANDSET">{{ 'voipadminApp.DeviceType.HANDSET' | translate }}</option>
+                                    <option value="HEADSET">{{ 'voipadminApp.DeviceType.HEADSET' | translate }}</option>
+                                    <option value="OTHER">{{ 'voipadminApp.DeviceType.OTHER' | translate }}</option>
+                                </select>
+                            </div>
+
+                            <div *ngIf="editForm.get('deviceType')?.value === 'OTHER'" class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.otherDeviceType" for="field_otherDeviceType">Other Device Type</label>
+                                <select class="form-control" id="field_otherDeviceType" name="otherDeviceType" formControlName="otherDeviceTypeId">
+                                    <option [ngValue]="null"></option>
+                                    <option [ngValue]="otherDeviceTypeOption.id" *ngFor="let otherDeviceTypeOption of otherdevicetypes; trackBy: trackById">{{ otherDeviceTypeOption.name }}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.name" for="field_name">Name</label>
                                 <input type="text" class="form-control" name="name" id="field_name"
                                        formControlName="name"/>
@@ -73,32 +92,24 @@
                                 <input type="hidden" class="form-control" name="firmwareFileContentType" id="field_firmwareFileContentType"
                                        formControlName="firmwareFileContentType" />
                             </div>
-
-                            <div class="form-group">
-                                <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.deviceType" for="field_deviceType">Device Type</label>
-                                <select class="form-control" name="deviceType" formControlName="deviceType" id="field_deviceType">
-                                    <option value="IPPHONE">{{ 'voipadminApp.DeviceType.IPPHONE' | translate }}</option>
-                                    <option value="IPGATEWAY">{{ 'voipadminApp.DeviceType.IPGATEWAY' | translate }}</option>
-                                    <option value="HANDSET">{{ 'voipadminApp.DeviceType.HANDSET' | translate }}</option>
-                                    <option value="HEADSET">{{ 'voipadminApp.DeviceType.HEADSET' | translate }}</option>
-                                    <option value="OTHER">{{ 'voipadminApp.DeviceType.OTHER' | translate }}</option>
-                                </select>
-                            </div>
-
-                            <div *ngIf="editForm.get('deviceType')?.value === 'OTHER'" class="form-group">
-                                <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.otherDeviceType" for="field_otherDeviceType">Other Device Type</label>
-                                <select class="form-control" id="field_otherDeviceType" name="otherDeviceType" formControlName="otherDeviceTypeId">
-                                    <option [ngValue]="null"></option>
-                                    <option [ngValue]="otherDeviceTypeOption.id" *ngFor="let otherDeviceTypeOption of otherdevicetypes; trackBy: trackById">{{ otherDeviceTypeOption.id }}</option>
-                                </select>
-                            </div>
                         </div>
                     </ng-template>
                 </li>
                 <li ngbNavItem>
                     <a ngbNavLink>Options</a>
                     <ng-template ngbNavContent>
-                        <div>Options content</div>
+                        <div class="tab-content">
+                            <jhi-alert-error></jhi-alert-error>
+
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.options" for="field_options">Options</label>
+                                <ng-select formControlName="options"
+                                           id="field_options"
+                                           [items]="options"
+                                           [multiple]="true"
+                                           bindLabel="codeWithDescr"></ng-select>
+                            </div>
+                        </div>
                     </ng-template>
                 </li>
             </ul>

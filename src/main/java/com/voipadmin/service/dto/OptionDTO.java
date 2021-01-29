@@ -9,7 +9,7 @@ import com.voipadmin.domain.enumeration.OptionValueType;
  * A DTO for the {@link com.voipadmin.domain.Option} entity.
  */
 public class OptionDTO implements Serializable {
-    
+
     private Long id;
 
     private String code;
@@ -20,8 +20,6 @@ public class OptionDTO implements Serializable {
 
     private Boolean multiple;
 
-    private Set<DeviceModelDTO> models = new HashSet<>();
-    
     public Long getId() {
         return id;
     }
@@ -62,14 +60,6 @@ public class OptionDTO implements Serializable {
         this.multiple = multiple;
     }
 
-    public Set<DeviceModelDTO> getModels() {
-        return models;
-    }
-
-    public void setModels(Set<DeviceModelDTO> deviceModels) {
-        this.models = deviceModels;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -96,7 +86,6 @@ public class OptionDTO implements Serializable {
             ", descr='" + getDescr() + "'" +
             ", valueType='" + getValueType() + "'" +
             ", multiple='" + isMultiple() + "'" +
-            ", models='" + getModels() + "'" +
             "}";
     }
 }

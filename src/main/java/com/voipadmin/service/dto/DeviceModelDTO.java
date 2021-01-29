@@ -2,6 +2,7 @@ package com.voipadmin.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Lob;
 import com.voipadmin.domain.enumeration.DeviceType;
 
@@ -33,6 +34,8 @@ public class DeviceModelDTO implements Serializable {
 
     private Long otherDeviceTypeId;
     private String otherDeviceTypeName;
+
+    private Set<OptionDTO> options;
 
     public Long getId() {
         return id;
@@ -120,6 +123,14 @@ public class DeviceModelDTO implements Serializable {
 
     public void setOtherDeviceTypeName(String otherDeviceTypeName) {
         this.otherDeviceTypeName = otherDeviceTypeName;
+    }
+
+    public Set<OptionDTO> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<OptionDTO> options) {
+        this.options = options;
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link DeviceModel} and its DTO {@link DeviceModelDTO}.
  */
-@Mapper(componentModel = "spring", uses = {OtherDeviceTypeMapper.class})
+@Mapper(componentModel = "spring", uses = {OtherDeviceTypeMapper.class, OptionMapper.class})
 public interface DeviceModelMapper extends EntityMapper<DeviceModelDTO, DeviceModel> {
 
     @Mapping(source = "otherDeviceType.id", target = "otherDeviceTypeId")
@@ -17,7 +17,6 @@ public interface DeviceModelMapper extends EntityMapper<DeviceModelDTO, DeviceMo
     DeviceModelDTO toDto(DeviceModel deviceModel);
 
     @Mapping(source = "otherDeviceTypeId", target = "otherDeviceType")
-    @Mapping(target = "options", ignore = true)
     @Mapping(target = "removeOptions", ignore = true)
     DeviceModel toEntity(DeviceModelDTO deviceModelDTO);
 

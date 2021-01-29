@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
@@ -11,6 +11,8 @@ import { DeviceModelService } from './device-model.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IOtherDeviceType } from 'app/shared/model/other-device-type.model';
 import { OtherDeviceTypeService } from 'app/entities/other-device-type/other-device-type.service';
+import { IOption } from 'app/shared/model/option.model';
+import { OptionService } from 'app/entities/option/option.service';
 
 @Component({
   selector: 'jhi-device-model-update',
@@ -19,6 +21,7 @@ import { OtherDeviceTypeService } from 'app/entities/other-device-type/other-dev
 export class DeviceModelUpdateComponent implements OnInit {
   isSaving = false;
   otherdevicetypes: IOtherDeviceType[] = [];
+  options: IOption[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -31,6 +34,7 @@ export class DeviceModelUpdateComponent implements OnInit {
     firmwareFileContentType: [],
     deviceType: [],
     otherDeviceTypeId: [],
+    options: [],
   });
 
   constructor(
@@ -38,6 +42,7 @@ export class DeviceModelUpdateComponent implements OnInit {
     protected eventManager: JhiEventManager,
     protected deviceModelService: DeviceModelService,
     protected otherDeviceTypeService: OtherDeviceTypeService,
+    protected optionService: OptionService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -47,6 +52,16 @@ export class DeviceModelUpdateComponent implements OnInit {
       this.updateForm(deviceModel);
 
       this.otherDeviceTypeService.query().subscribe((res: HttpResponse<IOtherDeviceType[]>) => (this.otherdevicetypes = res.body || []));
+      this.optionService.query().subscribe((res: HttpResponse<IOption[]>) => {
+        if (!!res.body && res.body.length > 0) {
+          this.options = res.body.map(option => {
+            option.codeWithDescr = `${option.code} (${option.descr})`;
+            return option;
+          });
+        } else {
+          this.options = [];
+        }
+      });
     });
   }
 
@@ -62,6 +77,12 @@ export class DeviceModelUpdateComponent implements OnInit {
       firmwareFileContentType: deviceModel.firmwareFileContentType,
       deviceType: deviceModel.deviceType,
       otherDeviceTypeId: deviceModel.otherDeviceTypeId,
+      options: deviceModel.options
+        ? deviceModel.options.map(option => {
+            option.codeWithDescr = `${option.code} (${option.descr})`;
+            return option;
+          })
+        : [],
     });
   }
 
@@ -108,6 +129,7 @@ export class DeviceModelUpdateComponent implements OnInit {
       firmwareFile: this.editForm.get(['firmwareFile'])!.value,
       deviceType: this.editForm.get(['deviceType'])!.value,
       otherDeviceTypeId: this.editForm.get(['otherDeviceTypeId'])!.value,
+      options: this.editForm.get(['options'])!.value,
     };
   }
 

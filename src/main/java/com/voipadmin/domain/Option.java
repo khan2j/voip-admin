@@ -1,5 +1,6 @@
 package com.voipadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -43,11 +44,9 @@ public class Option implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<OptionValue> possibleValues = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "options")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JoinTable(name = "option_models",
-               joinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "models_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<DeviceModel> models = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -62,9 +62,11 @@ public class DeviceModel implements Serializable {
     @JsonIgnoreProperties(value = "deviceModels", allowSetters = true)
     private OtherDeviceType otherDeviceType;
 
-    @ManyToMany(mappedBy = "models")
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
+    @JoinTable(name = "option_models",
+    joinColumns = @JoinColumn(name = "models_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
     private Set<Option> options = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
