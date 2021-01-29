@@ -37,7 +37,13 @@
       "children": "Children",
       "model": "Model",
       "responsiblePerson": "Responsible Person",
-      "parent": "Parent"
+      "parent": "Parent",
+      "validation": {
+        "macPattern": "MAC-address should be in 'AA-BB-CC-DD-EE-FF' or 'AA:BB:CC:DD:EE:FF' format",
+        "ipAddressPattern": "You provided wrong IP-address",
+        "subnetMaskPattern": "You provided wrong subnet mask",
+        "domainNamePattern": "You provided wrong domain name"
+      }
     }
   }
 }

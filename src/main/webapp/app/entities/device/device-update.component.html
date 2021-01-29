@@ -3,143 +3,207 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-device-heading" jhiTranslate="voipadminApp.device.home.createOrEditLabel">Create or edit a Device</h2>
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
+            <ul ngbNav #nav='ngbNav' class="nav-tabs">
+                <li ngbNavItem>
+                    <a ngbNavLink>General</a>
+                    <ng-template ngbNavContent>
+                        <div class="tab-content">
+                            <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.model" for="field_model">Model</label>
+                                <select class="form-control" id="field_model" name="model" formControlName="modelId">
+                                    <option [ngValue]="null"></option>
+                                    <option [ngValue]="deviceModelOption.id" *ngFor="let deviceModelOption of devicemodels; trackBy: trackById">{{ deviceModelOption.name }}</option>
+                                </select>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.mac" for="field_mac">Mac</label>
-                    <input type="text" class="form-control" name="mac" id="field_mac"
-                           formControlName="mac"/>
-                    <div *ngIf="editForm.get('mac')!.invalid && (editForm.get('mac')!.dirty || editForm.get('mac')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('mac')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.mac" for="field_mac">Mac</label>
+                                <input type="text" class="form-control" name="mac" id="field_mac"
+                                       formControlName="mac"/>
+                                <div *ngIf="editForm.get('mac')!.invalid && (editForm.get('mac')!.dirty || editForm.get('mac')!.touched)">
+                                    <small class="form-text text-danger"
+                                           *ngIf="editForm.get('mac')?.errors?.required" jhiTranslate="entity.validation.required">
+                                        This field is required.
+                                    </small>
+                                    <small class="form-text text-danger"
+                                           *ngIf="editForm.get('mac')?.errors?.pattern" jhiTranslate="voipadminApp.device.validation.macPattern">
+                                        Wrong MAC-address format
+                                    </small>
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.inventoryNumber" for="field_inventoryNumber">Inventory Number</label>
-                    <input type="text" class="form-control" name="inventoryNumber" id="field_inventoryNumber"
-                           formControlName="inventoryNumber"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.inventoryNumber" for="field_inventoryNumber">Inventory Number</label>
+                                <input type="text" class="form-control" name="inventoryNumber" id="field_inventoryNumber"
+                                       formControlName="inventoryNumber"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.location" for="field_location">Location</label>
-                    <input type="text" class="form-control" name="location" id="field_location"
-                           formControlName="location"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.location" for="field_location">Location</label>
+                                <input type="text" class="form-control" name="location" id="field_location"
+                                       formControlName="location"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.hostname" for="field_hostname">Hostname</label>
-                    <input type="text" class="form-control" name="hostname" id="field_hostname"
-                           formControlName="hostname"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.hostname" for="field_hostname">Hostname</label>
+                                <input type="text" class="form-control" name="hostname" id="field_hostname"
+                                       formControlName="hostname"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.webLogin" for="field_webLogin">Web Login</label>
-                    <input type="text" class="form-control" name="webLogin" id="field_webLogin"
-                           formControlName="webLogin"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.webLogin" for="field_webLogin">Web Login</label>
+                                <input type="text" class="form-control" name="webLogin" id="field_webLogin"
+                                       formControlName="webLogin"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.webPassword" for="field_webPassword">Web Password</label>
-                    <input type="text" class="form-control" name="webPassword" id="field_webPassword"
-                           formControlName="webPassword"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.webPassword" for="field_webPassword">Web Password</label>
+                                <input type="text" class="form-control" name="webPassword" id="field_webPassword"
+                                       formControlName="webPassword"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.dhcpEnabled" for="field_dhcpEnabled">Dhcp Enabled</label>
-                    <input type="checkbox" class="form-control" name="dhcpEnabled" id="field_dhcpEnabled"
-                           formControlName="dhcpEnabled"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.dhcpEnabled" for="field_dhcpEnabled">Dhcp Enabled</label><div>
+                                    <mat-slide-toggle formControlName="dhcpEnabled" id="field_dhcpEnabled"></mat-slide-toggle>
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.ipAddress" for="field_ipAddress">Ip Address</label>
-                    <input type="text" class="form-control" name="ipAddress" id="field_ipAddress"
-                           formControlName="ipAddress"/>
-                </div>
+                            <div *ngIf="!editForm.get('dhcpEnabled')?.value">
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="voipadminApp.device.ipAddress" for="field_ipAddress">Ip Address</label>
+                                    <input type="text" class="form-control" name="ipAddress" id="field_ipAddress"
+                                           formControlName="ipAddress"/>
+                                    <div *ngIf="editForm.get('ipAddress')!.invalid && (editForm.get('ipAddress')!.dirty || editForm.get('ipAddress')!.touched)">
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('ipAddress')?.errors?.pattern" jhiTranslate="voipadminApp.device.validation.ipAddressPattern">
+                                            You provided wrong IP-address.
+                                        </small>
+                                    </div>
+                                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.subnetMask" for="field_subnetMask">Subnet Mask</label>
-                    <input type="text" class="form-control" name="subnetMask" id="field_subnetMask"
-                           formControlName="subnetMask"/>
-                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="voipadminApp.device.subnetMask" for="field_subnetMask">Subnet Mask</label>
+                                    <input type="text" class="form-control" name="subnetMask" id="field_subnetMask"
+                                           formControlName="subnetMask"/>
+                                    <div *ngIf="editForm.get('subnetMask')!.invalid && (editForm.get('subnetMask')!.dirty || editForm.get('subnetMask')!.touched)">
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('subnetMask')?.errors?.pattern" jhiTranslate="voipadminApp.device.validation.subnetMaskPattern">
+                                            You provided wrong subnet mask.
+                                        </small>
+                                    </div>
+                                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.defaultGw" for="field_defaultGw">Default Gw</label>
-                    <input type="text" class="form-control" name="defaultGw" id="field_defaultGw"
-                           formControlName="defaultGw"/>
-                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="voipadminApp.device.defaultGw" for="field_defaultGw">Default Gw</label>
+                                    <input type="text" class="form-control" name="defaultGw" id="field_defaultGw"
+                                           formControlName="defaultGw"/>
+                                    <div *ngIf="editForm.get('defaultGw')!.invalid && (editForm.get('defaultGw')!.dirty || editForm.get('defaultGw')!.touched)">
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('defaultGw')?.errors?.wrongIpAddress" jhiTranslate="voipadminApp.device.validation.ipAddressPattern">
+                                            You provided wrong IP-address.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('defaultGw')?.errors?.wrongDomainName" jhiTranslate="voipadminApp.device.validation.domainNamePattern">
+                                            You provided wrong domain name.
+                                        </small>
+                                    </div>
+                                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.dns1" for="field_dns1">Dns 1</label>
-                    <input type="text" class="form-control" name="dns1" id="field_dns1"
-                           formControlName="dns1"/>
-                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="voipadminApp.device.dns1" for="field_dns1">Dns 1</label>
+                                    <input type="text" class="form-control" name="dns1" id="field_dns1"
+                                           formControlName="dns1"/>
+                                    <div *ngIf="editForm.get('dns1')!.invalid && (editForm.get('dns1')!.dirty || editForm.get('dns1')!.touched)">
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('dns1')?.errors?.wrongIpAddress" jhiTranslate="voipadminApp.device.validation.ipAddressPattern">
+                                            You provided wrong IP-address.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('dns1')?.errors?.wrongDomainName" jhiTranslate="voipadminApp.device.validation.domainNamePattern">
+                                            You provided wrong domain name.
+                                        </small>
+                                    </div>
+                                </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.dns2" for="field_dns2">Dns 2</label>
-                    <input type="text" class="form-control" name="dns2" id="field_dns2"
-                           formControlName="dns2"/>
-                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="voipadminApp.device.dns2" for="field_dns2">Dns 2</label>
+                                    <input type="text" class="form-control" name="dns2" id="field_dns2"
+                                           formControlName="dns2"/>
+                                    <div *ngIf="editForm.get('dns2')!.invalid && (editForm.get('dns2')!.dirty || editForm.get('dns2')!.touched)">
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('dns2')?.errors?.wrongIpAddress" jhiTranslate="voipadminApp.device.validation.ipAddressPattern">
+                                            You provided wrong IP-address.
+                                        </small>
+                                        <small class="form-text text-danger"
+                                               *ngIf="editForm.get('dns2')?.errors?.wrongDomainName" jhiTranslate="voipadminApp.device.validation.domainNamePattern">
+                                            You provided wrong domain name.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.provisioningMode" for="field_provisioningMode">Provisioning Mode</label>
-                    <select class="form-control" name="provisioningMode" formControlName="provisioningMode" id="field_provisioningMode">
-                        <option value="FTP">{{ 'voipadminApp.ProvisioningMode.FTP' | translate }}</option>
-                        <option value="TFTP">{{ 'voipadminApp.ProvisioningMode.TFTP' | translate }}</option>
-                        <option value="HTTP">{{ 'voipadminApp.ProvisioningMode.HTTP' | translate }}</option>
-                    </select>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.provisioningMode" for="field_provisioningMode">Provisioning Mode</label>
+                                <select class="form-control" name="provisioningMode" formControlName="provisioningMode" id="field_provisioningMode">
+                                    <option value="FTP">{{ 'voipadminApp.ProvisioningMode.FTP' | translate }}</option>
+                                    <option value="TFTP">{{ 'voipadminApp.ProvisioningMode.TFTP' | translate }}</option>
+                                    <option value="HTTP">{{ 'voipadminApp.ProvisioningMode.HTTP' | translate }}</option>
+                                </select>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.provisioningUrl" for="field_provisioningUrl">Provisioning Url</label>
-                    <input type="text" class="form-control" name="provisioningUrl" id="field_provisioningUrl"
-                           formControlName="provisioningUrl"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.provisioningUrl" for="field_provisioningUrl">Provisioning Url</label>
+                                <input type="text" class="form-control" name="provisioningUrl" id="field_provisioningUrl"
+                                       formControlName="provisioningUrl"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.ntpServer" for="field_ntpServer">Ntp Server</label>
-                    <input type="text" class="form-control" name="ntpServer" id="field_ntpServer"
-                           formControlName="ntpServer"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.ntpServer" for="field_ntpServer">Ntp Server</label>
+                                <input type="text" class="form-control" name="ntpServer" id="field_ntpServer"
+                                       formControlName="ntpServer"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.notes" for="field_notes">Notes</label>
-                    <input type="text" class="form-control" name="notes" id="field_notes"
-                           formControlName="notes"/>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.notes" for="field_notes">Notes</label>
+                                <input type="text" class="form-control" name="notes" id="field_notes"
+                                       formControlName="notes"/>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.model" for="field_model">Model</label>
-                    <select class="form-control" id="field_model" name="model" formControlName="modelId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="deviceModelOption.id" *ngFor="let deviceModelOption of devicemodels; trackBy: trackById">{{ deviceModelOption.name }}</option>
-                    </select>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.responsiblePerson" for="field_responsiblePerson">Responsible Person</label>
+                                <select class="form-control" id="field_responsiblePerson" name="responsiblePerson" formControlName="responsiblePersonId">
+                                    <option [ngValue]="null"></option>
+                                    <option [ngValue]="responsiblePersonOption.id" *ngFor="let responsiblePersonOption of responsiblepeople; trackBy: trackById">{{ responsiblePersonOption.fullName }}</option>
+                                </select>
+                            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.responsiblePerson" for="field_responsiblePerson">Responsible Person</label>
-                    <select class="form-control" id="field_responsiblePerson" name="responsiblePerson" formControlName="responsiblePersonId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="responsiblePersonOption.id" *ngFor="let responsiblePersonOption of responsiblepeople; trackBy: trackById">{{ responsiblePersonOption.lastName }}</option>
-                    </select>
-                </div>
+                            <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.device.parent" for="field_parent">Parent</label>
+                                <select class="form-control" id="field_parent" name="parent" formControlName="parentId">
+                                    <option [ngValue]="null"></option>
+                                    <option [ngValue]="deviceOption.id" *ngFor="let deviceOption of devices; trackBy: trackById">{{ deviceOption.id }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink>Line Settings</a>
+                    <ng-template ngbNavContent>
+                        <div>Line Settings Content</div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink>Other Settings</a>
+                    <ng-template ngbNavContent>
+                        <div>Other Settings Content</div>
+                    </ng-template>
+                </li>
+            </ul>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="voipadminApp.device.parent" for="field_parent">Parent</label>
-                    <select class="form-control" id="field_parent" name="parent" formControlName="parentId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="deviceOption.id" *ngFor="let deviceOption of devices; trackBy: trackById">{{ deviceOption.id }}</option>
-                    </select>
-                </div>
-            </div>
+            <div [ngbNavOutlet]="nav"></div>
 
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
@@ -150,6 +214,7 @@
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
+
         </form>
     </div>
 </div>

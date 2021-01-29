@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { IDeviceModel } from 'app/shared/model/device-model.model';
 import { DeviceModelService } from 'app/entities/device-model/device-model.service';
 import { IResponsiblePerson } from 'app/shared/model/responsible-person.model';
 import { ResponsiblePersonService } from 'app/entities/responsible-person/responsible-person.service';
+import { DeviceValidationService } from 'app/entities/device/device-validation.service';
 
 type SelectableEntity = IDeviceModel | IResponsiblePerson | IDevice;
 
@@ -26,18 +27,25 @@ export class DeviceUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    mac: [null, [Validators.required]],
+    mac: [null, [Validators.required, Validators.pattern('^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$')]],
     inventoryNumber: [],
     location: [],
     hostname: [],
     webLogin: [],
     webPassword: [],
     dhcpEnabled: [],
-    ipAddress: [],
-    subnetMask: [],
-    defaultGw: [],
-    dns1: [],
-    dns2: [],
+    ipAddress: [null, [Validators.pattern('^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$')]],
+    subnetMask: [
+      null,
+      [
+        Validators.pattern(
+          '^(((255\\.){3}(255|254|252|248|240|224|192|128|0+))|((255\\.){2}(255|254|252|248|240|224|192|128|0+)\\.0)|((255\\.)(255|254|252|248|240|224|192|128|0+)(\\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\\.0+){3}))$'
+        ),
+      ],
+    ],
+    defaultGw: [null, this.validationService.ipAddressOrDomainNamePattern],
+    dns1: [null, this.validationService.ipAddressOrDomainNamePattern],
+    dns2: [null, this.validationService.ipAddressOrDomainNamePattern],
     provisioningMode: [],
     provisioningUrl: [],
     ntpServer: [],
@@ -52,7 +60,8 @@ export class DeviceUpdateComponent implements OnInit {
     protected deviceModelService: DeviceModelService,
     protected responsiblePersonService: ResponsiblePersonService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private validationService: DeviceValidationService
   ) {}
 
   ngOnInit(): void {
@@ -152,5 +161,9 @@ export class DeviceUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  test(): void {
+    1 + 2;
   }
 }
