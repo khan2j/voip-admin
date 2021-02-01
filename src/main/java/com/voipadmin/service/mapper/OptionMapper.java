@@ -9,11 +9,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Option} and its DTO {@link OptionDTO}.
  */
-@Mapper(componentModel = "spring", uses = {DeviceModelMapper.class})
+@Mapper(componentModel = "spring", uses = {DeviceModelMapper.class, OptionValueMapper.class})
 public interface OptionMapper extends EntityMapper<OptionDTO, Option> {
 
+    @Mapping(source = "possibleValues", target = "possibleValues")
+    OptionDTO toDto(Option option);
 
-    @Mapping(target = "possibleValues", ignore = true)
     @Mapping(target = "removePossibleValues", ignore = true)
     @Mapping(target = "removeModels", ignore = true)
     Option toEntity(OptionDTO optionDTO);

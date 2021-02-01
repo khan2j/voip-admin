@@ -13,6 +13,7 @@
       "delete": {
         "question": "Are you sure you want to delete Option {{ id }}?"
       },
+      "add": "Add Possible Value",
       "detail": {
         "title": "Option"
       },

@@ -20,6 +20,8 @@ public class OptionDTO implements Serializable {
 
     private Boolean multiple;
 
+    private Set<OptionValueDTO> possibleValues;
+
     public Long getId() {
         return id;
     }
@@ -58,6 +60,14 @@ public class OptionDTO implements Serializable {
 
     public void setMultiple(Boolean multiple) {
         this.multiple = multiple;
+    }
+
+    public Set<OptionValueDTO> getPossibleValues() {
+        return possibleValues;
+    }
+
+    public void setPossibleValues(Set<OptionValueDTO> possibleValues) {
+        this.possibleValues = possibleValues;
     }
 
     @Override

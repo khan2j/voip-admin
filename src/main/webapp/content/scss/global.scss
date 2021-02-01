@@ -199,3 +199,11 @@ ui bootstrap tweaks
 .tab-content {
   margin-top: 20px;
 }
+.vertical-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+.vertical-radio-button {
+  margin: 5px;
+}

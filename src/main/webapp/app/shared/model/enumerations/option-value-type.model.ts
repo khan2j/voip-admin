@@ -1,5 +1,5 @@
 export const enum OptionValueType {
-  TEXT = 'TEXT',
+  TEXT = 'Arbitrary',
 
-  SELECT = 'SELECT',
+  SELECT = 'Predefined',
 }

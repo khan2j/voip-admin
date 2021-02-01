@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -9,10 +9,12 @@ import { IOption, Option } from 'app/shared/model/option.model';
 import { OptionService } from './option.service';
 import { IDeviceModel } from 'app/shared/model/device-model.model';
 import { DeviceModelService } from 'app/entities/device-model/device-model.service';
+import { OptionValue } from 'app/shared/model/option-value.model';
 
 @Component({
   selector: 'jhi-option-update',
   templateUrl: './option-update.component.html',
+  styleUrls: ['./option-update.component.scss'],
 })
 export class OptionUpdateComponent implements OnInit {
   isSaving = false;
@@ -25,6 +27,7 @@ export class OptionUpdateComponent implements OnInit {
     valueType: [],
     multiple: [],
     models: [],
+    possibleValues: this.fb.array([]),
   });
 
   constructor(
@@ -51,6 +54,7 @@ export class OptionUpdateComponent implements OnInit {
       multiple: option.multiple,
       models: option.models,
     });
+    this.initPossibleValues(option.possibleValues);
   }
 
   previousState(): void {
@@ -76,6 +80,7 @@ export class OptionUpdateComponent implements OnInit {
       valueType: this.editForm.get(['valueType'])!.value,
       multiple: this.editForm.get(['multiple'])!.value,
       models: this.editForm.get(['models'])!.value,
+      possibleValues: this.editForm.get(['possibleValues']) ? this.editForm.get(['possibleValues'])!.value : [],
     };
   }
 
@@ -108,5 +113,40 @@ export class OptionUpdateComponent implements OnInit {
       }
     }
     return option;
+  }
+
+  possibleValues(): FormArray {
+    return this.editForm.get('possibleValues') as FormArray;
+  }
+
+  addPossibleValue(): void {
+    (this.editForm.get('possibleValues') as FormArray).push(
+      this.fb.group({
+        id: null,
+        value: null,
+        optionId: this.editForm.get('id')!.value,
+      })
+    );
+  }
+
+  removePossibleValue(index: number): void {
+    (this.editForm.get('possibleValues') as FormArray).removeAt(index);
+  }
+
+  initPossibleValues(possibleValues: OptionValue[] | undefined): void {
+    const possibleValuesControls = this.editForm.get('possibleValues') as FormArray;
+    if (possibleValues && possibleValues.length > 0) {
+      possibleValues.forEach(possibleValue => {
+        possibleValuesControls.push(
+          this.fb.group({
+            id: possibleValue.id,
+            value: possibleValue.value,
+            optionId: possibleValue.optionId,
+          })
+        );
+      });
+    } else {
+      this.addPossibleValue();
+    }
   }
 }
