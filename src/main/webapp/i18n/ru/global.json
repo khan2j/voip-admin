@@ -17,6 +17,7 @@
         "setting": "Setting",
         "option": "Option",
         "optionValue": "Option Value",
+        "vendor": "Vendor",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

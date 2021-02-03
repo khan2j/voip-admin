@@ -9,10 +9,18 @@ import { DeviceModelDeleteDialogComponent } from './device-model-delete-dialog.c
 import { deviceModelRoute } from './device-model.route';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeviceModelVendorChangeDialogComponent } from 'app/entities/device-model/device-model-vendor-change-dialog.component';
 
 @NgModule({
-  imports: [VoipadminSharedModule, RouterModule.forChild(deviceModelRoute), MatSlideToggleModule, NgSelectModule],
-  declarations: [DeviceModelComponent, DeviceModelDetailComponent, DeviceModelUpdateComponent, DeviceModelDeleteDialogComponent],
+  imports: [VoipadminSharedModule, RouterModule.forChild(deviceModelRoute), MatSlideToggleModule, NgSelectModule, MatDialogModule],
+  declarations: [
+    DeviceModelComponent,
+    DeviceModelDetailComponent,
+    DeviceModelUpdateComponent,
+    DeviceModelDeleteDialogComponent,
+    DeviceModelVendorChangeDialogComponent,
+  ],
   entryComponents: [DeviceModelDeleteDialogComponent],
 })
 export class VoipadminDeviceModelModule {}

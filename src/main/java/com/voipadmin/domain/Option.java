@@ -1,6 +1,7 @@
 package com.voipadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -48,6 +49,13 @@ public class Option implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnore
     private Set<DeviceModel> models = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(name = "vendor_option",
+        joinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "vendor_id", referencedColumnName = "id"))
+    private Set<Vendor> vendors;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -160,6 +168,26 @@ public class Option implements Serializable {
         this.models = deviceModels;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public Set<Vendor> getVendors() {
+        return vendors;
+    }
+
+    public void setVendors(Set<Vendor> vendors) {
+        this.vendors = vendors;
+    }
+
+    public Option addVendor(Vendor vendor) {
+        this.vendors.add(vendor);
+        vendor.getOptions().add(this);
+        return this;
+    }
+
+    public Option removeModels(Vendor vendor) {
+        this.vendors.remove(vendor);
+        vendor.getOptions().remove(this);
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

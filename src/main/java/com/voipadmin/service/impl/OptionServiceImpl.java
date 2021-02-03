@@ -13,7 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Option}.
@@ -66,5 +69,11 @@ public class OptionServiceImpl implements OptionService {
     public void delete(Long id) {
         log.debug("Request to delete Option : {}", id);
         optionRepository.deleteById(id);
+    }
+
+    public List<OptionDTO> findAllByVendorId(Long vendorId) {
+        log.debug("Request to get all options by vendor id");
+        return optionRepository.findAllByVendor(vendorId)
+            .stream().map(optionMapper::toDto).collect(Collectors.toList());
     }
 }

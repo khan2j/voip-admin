@@ -13,6 +13,11 @@ import { IOtherDeviceType } from 'app/shared/model/other-device-type.model';
 import { OtherDeviceTypeService } from 'app/entities/other-device-type/other-device-type.service';
 import { IOption } from 'app/shared/model/option.model';
 import { OptionService } from 'app/entities/option/option.service';
+import { VendorService } from 'app/entities/vendor/vendor.service';
+import { IVendor } from 'app/shared/model/vendor.model';
+import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceModelVendorChangeDialogComponent } from 'app/entities/device-model/device-model-vendor-change-dialog.component';
 
 @Component({
   selector: 'jhi-device-model-update',
@@ -21,7 +26,10 @@ import { OptionService } from 'app/entities/option/option.service';
 export class DeviceModelUpdateComponent implements OnInit {
   isSaving = false;
   otherdevicetypes: IOtherDeviceType[] = [];
-  options: IOption[] = [];
+  options: IOption[] = []; // Only vendor-specific
+  vendors: IVendor[] = [];
+
+  oldVendorId: number | undefined;
 
   editForm = this.fb.group({
     id: [],
@@ -32,6 +40,7 @@ export class DeviceModelUpdateComponent implements OnInit {
     configTemplateContentType: [],
     firmwareFile: [],
     firmwareFileContentType: [],
+    vendorId: [],
     deviceType: [],
     otherDeviceTypeId: [],
     options: [],
@@ -44,6 +53,9 @@ export class DeviceModelUpdateComponent implements OnInit {
     protected otherDeviceTypeService: OtherDeviceTypeService,
     protected optionService: OptionService,
     protected activatedRoute: ActivatedRoute,
+    protected vendorService: VendorService,
+    protected dialog: MatDialog,
+    protected modalService: NgbModal,
     private fb: FormBuilder
   ) {}
 
@@ -52,16 +64,7 @@ export class DeviceModelUpdateComponent implements OnInit {
       this.updateForm(deviceModel);
 
       this.otherDeviceTypeService.query().subscribe((res: HttpResponse<IOtherDeviceType[]>) => (this.otherdevicetypes = res.body || []));
-      this.optionService.query().subscribe((res: HttpResponse<IOption[]>) => {
-        if (!!res.body && res.body.length > 0) {
-          this.options = res.body.map(option => {
-            option.codeWithDescr = `${option.code} (${option.descr})`;
-            return option;
-          });
-        } else {
-          this.options = [];
-        }
-      });
+      this.vendorService.query().subscribe((res: HttpResponse<IVendor[]>) => (this.vendors = res.body || []));
     });
   }
 
@@ -75,6 +78,7 @@ export class DeviceModelUpdateComponent implements OnInit {
       configTemplateContentType: deviceModel.configTemplateContentType,
       firmwareFile: deviceModel.firmwareFile,
       firmwareFileContentType: deviceModel.firmwareFileContentType,
+      vendorId: deviceModel.vendorId,
       deviceType: deviceModel.deviceType,
       otherDeviceTypeId: deviceModel.otherDeviceTypeId,
       options: deviceModel.options
@@ -84,6 +88,10 @@ export class DeviceModelUpdateComponent implements OnInit {
           })
         : [],
     });
+    if (deviceModel.vendorId) {
+      this.updateVendorOptions(deviceModel.vendorId);
+    }
+    this.oldVendorId = deviceModel.vendorId;
   }
 
   byteSize(base64String: string): string {
@@ -127,6 +135,7 @@ export class DeviceModelUpdateComponent implements OnInit {
       configTemplate: this.editForm.get(['configTemplate'])!.value,
       firmwareFileContentType: this.editForm.get(['firmwareFileContentType'])!.value,
       firmwareFile: this.editForm.get(['firmwareFile'])!.value,
+      vendorId: this.editForm.get(['vendorId'])!.value,
       deviceType: this.editForm.get(['deviceType'])!.value,
       otherDeviceTypeId: this.editForm.get(['otherDeviceTypeId'])!.value,
       options: this.editForm.get(['options'])!.value,
@@ -151,5 +160,31 @@ export class DeviceModelUpdateComponent implements OnInit {
 
   trackById(index: number, item: IOtherDeviceType): any {
     return item.id;
+  }
+
+  updateVendorOptions(vendorId: number): void {
+    this.optionService.findByVendorId(vendorId).subscribe((res: HttpResponse<IOption[]>) => {
+      if (!!res.body && res.body.length > 0) {
+        this.options = res.body.map(option => {
+          option.codeWithDescr = `${option.code} (${option.descr})`;
+          return option;
+        });
+      } else {
+        this.options = [];
+      }
+    });
+  }
+
+  onVendorChange(vendor: IVendor): void {
+    const modalRef = this.modalService.open(DeviceModelVendorChangeDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.oldValue = this.oldVendorId;
+    modalRef.componentInstance.newValue = vendor.id;
+    modalRef.result.then(result => {
+      this.editForm.patchValue({
+        vendorId: result,
+        options: [],
+      });
+      this.updateVendorOptions(result);
+    });
   }
 }

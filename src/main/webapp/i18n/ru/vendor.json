@@ -1,0 +1,24 @@
+{
+  "voipadminApp": {
+    "vendor": {
+      "home": {
+        "title": "Vendors",
+        "createLabel": "Создать новый Vendor",
+        "createOrEditLabel": "Создать или отредактировать Vendor",
+        "notFound": "No Vendors found"
+      },
+      "created": "Новый Vendor создан с идентификатором {{ param }}",
+      "updated": "Vendor обновлен с идентификатором {{ param }}",
+      "deleted": "Vendor удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Vendor {{ id }}?"
+      },
+      "detail": {
+        "title": "Vendor"
+      },
+      "name": "Name",
+      "deviceModels": "Device Models",
+      "options": "Options"
+    }
+  }
+}

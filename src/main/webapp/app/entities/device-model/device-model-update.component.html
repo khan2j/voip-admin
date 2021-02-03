@@ -12,6 +12,16 @@
                             <jhi-alert-error></jhi-alert-error>
 
                             <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.vendor" for="field_vendor">Vendor</label>
+                                <ng-select formControlName="vendorId"
+                                           id="field_vendor"
+                                           [items]="vendors"
+                                           bindLabel="name"
+                                           bindValue="id"
+                                           (change)="onVendorChange($event)"></ng-select>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.deviceType" for="field_deviceType">Device Type</label>
                                 <select class="form-control" name="deviceType" formControlName="deviceType" id="field_deviceType">
                                     <option value="IPPHONE">{{ 'voipadminApp.DeviceType.IPPHONE' | translate }}</option>
@@ -49,13 +59,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div *ngIf="editForm.get('isConfigurable')?.value" class="form-group">
                                 <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.linesCount" for="field_linesCount">Lines Count</label>
                                 <input type="number" class="form-control" name="linesCount" id="field_linesCount"
                                        formControlName="linesCount"/>
                             </div>
 
-                            <div class="form-group">
+                            <div *ngIf="editForm.get('isConfigurable')?.value" class="form-group">
                                 <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.configTemplate" for="field_configTemplate">Config Template</label>
                                 <div>
                                     <div *ngIf="editForm.get('configTemplate')!.value" class="form-text text-danger clearfix">
@@ -74,7 +84,7 @@
                                        formControlName="configTemplateContentType" />
                             </div>
 
-                            <div class="form-group">
+                            <div *ngIf="editForm.get('isConfigurable')?.value" class="form-group">
                                 <label class="form-control-label" jhiTranslate="voipadminApp.deviceModel.firmwareFile" for="field_firmwareFile">Firmware File</label>
                                 <div>
                                     <div *ngIf="editForm.get('firmwareFile')!.value" class="form-text text-danger clearfix">

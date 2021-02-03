@@ -13,6 +13,10 @@
       "delete": {
         "question": "Are you sure you want to delete Device Model {{ id }}?"
       },
+      "vendorChange": {
+        "question": "Are you sure you want to change this model's vendor? This will erase available options list.",
+        "title": "Confirm Vendor Changing"
+      },
       "detail": {
         "title": "Device Model"
       },
@@ -23,7 +27,8 @@
       "firmwareFile": "Firmware File",
       "deviceType": "Device Type",
       "otherDeviceType": "Other Device Type",
-      "options": "Options"
+      "options": "Options",
+      "vendor": "Vendor"
     }
   }
 }

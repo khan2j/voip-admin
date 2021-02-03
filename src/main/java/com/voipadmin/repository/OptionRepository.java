@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Spring Data  repository for the Option entity.
@@ -26,4 +27,7 @@ public interface OptionRepository extends JpaRepository<Option, Long> {
 
     @Query("select option from Option option left join fetch option.models where option.id =:id")
     Optional<Option> findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT option FROM Option option JOIN fetch option.vendors vendors WHERE vendors.id = :vendorId")
+    List<Option> findAllByVendor(@Param("vendorId") Long vendorId);
 }

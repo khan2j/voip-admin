@@ -66,6 +66,9 @@ public class CacheConfiguration {
             createCache(cm, com.voipadmin.domain.Option.class.getName() + ".models");
             createCache(cm, com.voipadmin.domain.OptionValue.class.getName());
             createCache(cm, com.voipadmin.domain.OptionValue.class.getName() + ".settings");
+            createCache(cm, com.voipadmin.domain.Vendor.class.getName());
+            createCache(cm, com.voipadmin.domain.Vendor.class.getName() + ".deviceModels");
+            createCache(cm, com.voipadmin.domain.Vendor.class.getName() + ".options");
             // jhipster-needle-ehcache-add-entry
         };
     }

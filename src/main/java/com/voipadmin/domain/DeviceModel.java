@@ -62,6 +62,10 @@ public class DeviceModel implements Serializable {
     @JsonIgnoreProperties(value = "deviceModels", allowSetters = true)
     private OtherDeviceType otherDeviceType;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = "deviceModels", allowSetters = true)
+    private Vendor vendor;
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "option_models",
@@ -220,6 +224,14 @@ public class DeviceModel implements Serializable {
         this.options = options;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
 
     @Override
     public boolean equals(Object o) {

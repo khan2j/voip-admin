@@ -10,6 +10,8 @@ export interface IDeviceModel {
   configTemplate?: any;
   firmwareFileContentType?: string;
   firmwareFile?: any;
+  vendorId?: number;
+  vendorName?: string;
   deviceType?: DeviceType;
   otherDeviceTypeId?: number;
   otherDeviceTypeName?: string;
@@ -26,6 +28,7 @@ export class DeviceModel implements IDeviceModel {
     public configTemplate?: any,
     public firmwareFileContentType?: string,
     public firmwareFile?: any,
+    public vendorId?: number,
     public deviceType?: DeviceType,
     public otherDeviceTypeId?: number,
     public options?: IOption[]

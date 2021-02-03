@@ -35,4 +35,8 @@ export class OptionService {
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+
+  findByVendorId(vendorId: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IOption[]>(`${this.resourceUrl}/byVendor/${vendorId}`, { observe: 'response' });
+  }
 }

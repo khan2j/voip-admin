@@ -128,4 +128,11 @@ public class OptionResource {
         optionService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/options/byVendor/{vendorId}")
+    public ResponseEntity<List<OptionDTO>> getAllOptionsByVendor(@PathVariable Long vendorId) {
+        log.debug("REST request to get all Options by vendor");
+        List<OptionDTO> optionsOfVendor = optionService.findAllByVendorId(vendorId);
+        return ResponseEntity.ok().body(optionsOfVendor);
+    }
 }

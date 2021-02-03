@@ -35,6 +35,9 @@ public class DeviceModelDTO implements Serializable {
     private Long otherDeviceTypeId;
     private String otherDeviceTypeName;
 
+    private Long vendorId;
+    private String vendorName;
+
     private Set<OptionDTO> options;
 
     public Long getId() {
@@ -131,6 +134,22 @@ public class DeviceModelDTO implements Serializable {
 
     public void setOptions(Set<OptionDTO> options) {
         this.options = options;
+    }
+
+    public Long getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(Long vendorId) {
+        this.vendorId = vendorId;
+    }
+
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
     }
 
     @Override

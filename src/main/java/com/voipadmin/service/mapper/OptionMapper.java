@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Option} and its DTO {@link OptionDTO}.
  */
-@Mapper(componentModel = "spring", uses = {DeviceModelMapper.class, OptionValueMapper.class})
+@Mapper(componentModel = "spring", uses = {DeviceModelMapper.class, OptionValueMapper.class, VendorMapper.class})
 public interface OptionMapper extends EntityMapper<OptionDTO, Option> {
 
     @Mapping(source = "possibleValues", target = "possibleValues")

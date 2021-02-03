@@ -22,7 +22,8 @@
       "valueType": "Value Type",
       "multiple": "Multiple",
       "possibleValues": "Possible Values",
-      "models": "Models"
+      "models": "Models",
+      "vendors": "Vendors"
     }
   }
 }

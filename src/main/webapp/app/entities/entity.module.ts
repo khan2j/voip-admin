@@ -44,6 +44,10 @@ import { RouterModule } from '@angular/router';
         path: 'option-value',
         loadChildren: () => import('./option-value/option-value.module').then(m => m.VoipadminOptionValueModule),
       },
+      {
+        path: 'vendor',
+        loadChildren: () => import('./vendor/vendor.module').then(m => m.VoipadminVendorModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

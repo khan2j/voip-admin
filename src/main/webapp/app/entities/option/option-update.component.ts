@@ -10,6 +10,8 @@ import { OptionService } from './option.service';
 import { IDeviceModel } from 'app/shared/model/device-model.model';
 import { DeviceModelService } from 'app/entities/device-model/device-model.service';
 import { OptionValue } from 'app/shared/model/option-value.model';
+import { IVendor } from 'app/shared/model/vendor.model';
+import { VendorService } from 'app/entities/vendor/vendor.service';
 
 @Component({
   selector: 'jhi-option-update',
@@ -19,6 +21,7 @@ import { OptionValue } from 'app/shared/model/option-value.model';
 export class OptionUpdateComponent implements OnInit {
   isSaving = false;
   devicemodels: IDeviceModel[] = [];
+  vendors: IVendor[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -27,12 +30,14 @@ export class OptionUpdateComponent implements OnInit {
     valueType: [],
     multiple: [],
     models: [],
+    vendors: [],
     possibleValues: this.fb.array([]),
   });
 
   constructor(
     protected optionService: OptionService,
     protected deviceModelService: DeviceModelService,
+    protected vendorService: VendorService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -42,6 +47,7 @@ export class OptionUpdateComponent implements OnInit {
       this.updateForm(option);
 
       this.deviceModelService.query().subscribe((res: HttpResponse<IDeviceModel[]>) => (this.devicemodels = res.body || []));
+      this.vendorService.query().subscribe((res: HttpResponse<IVendor[]>) => (this.vendors = res.body || []));
     });
   }
 
@@ -53,6 +59,7 @@ export class OptionUpdateComponent implements OnInit {
       valueType: option.valueType,
       multiple: option.multiple,
       models: option.models,
+      vendors: option.vendors,
     });
     this.initPossibleValues(option.possibleValues);
   }
@@ -80,6 +87,7 @@ export class OptionUpdateComponent implements OnInit {
       valueType: this.editForm.get(['valueType'])!.value,
       multiple: this.editForm.get(['multiple'])!.value,
       models: this.editForm.get(['models'])!.value,
+      vendors: this.editForm.get(['vendors'])!.value,
       possibleValues: this.editForm.get(['possibleValues']) ? this.editForm.get(['possibleValues'])!.value : [],
     };
   }

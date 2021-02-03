@@ -22,6 +22,8 @@ public class OptionDTO implements Serializable {
 
     private Set<OptionValueDTO> possibleValues;
 
+    private Set<VendorDTO> vendors;
+
     public Long getId() {
         return id;
     }
@@ -68,6 +70,14 @@ public class OptionDTO implements Serializable {
 
     public void setPossibleValues(Set<OptionValueDTO> possibleValues) {
         this.possibleValues = possibleValues;
+    }
+
+    public Set<VendorDTO> getVendors() {
+        return vendors;
+    }
+
+    public void setVendors(Set<VendorDTO> vendors) {
+        this.vendors = vendors;
     }
 
     @Override
