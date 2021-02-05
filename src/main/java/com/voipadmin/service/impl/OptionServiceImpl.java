@@ -76,4 +76,11 @@ public class OptionServiceImpl implements OptionService {
         return optionRepository.findAllByVendor(vendorId)
             .stream().map(optionMapper::toDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<OptionDTO> findAllByModelId(Long modelId) {
+        log.debug("Request to get all options by model id");
+        return optionRepository.findAllByModel(modelId)
+            .stream().map(optionMapper::toDto).collect(Collectors.toList());
+    }
 }

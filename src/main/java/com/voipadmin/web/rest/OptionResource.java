@@ -135,4 +135,11 @@ public class OptionResource {
         List<OptionDTO> optionsOfVendor = optionService.findAllByVendorId(vendorId);
         return ResponseEntity.ok().body(optionsOfVendor);
     }
+
+    @GetMapping("/options/byModel/{modelId}")
+    public ResponseEntity<List<OptionDTO>> getAllOptionsByModel(@PathVariable Long modelId) {
+        log.debug("REST request to get all Options by model");
+        List<OptionDTO> optionsOfModel = optionService.findAllByModelId(modelId);
+        return ResponseEntity.ok().body(optionsOfModel);
+    }
 }

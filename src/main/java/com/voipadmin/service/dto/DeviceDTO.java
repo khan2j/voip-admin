@@ -2,6 +2,8 @@ package com.voipadmin.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Set;
+
 import com.voipadmin.domain.enumeration.ProvisioningMode;
 
 /**
@@ -56,6 +58,8 @@ public class DeviceDTO implements Serializable {
     private String responsiblePersonFullName;
 
     private Long parentId;
+
+    private Set<SettingDTO> settings;
 
     public Long getId() {
         return id;
@@ -239,6 +243,14 @@ public class DeviceDTO implements Serializable {
 
     public void setParentId(Long deviceId) {
         this.parentId = deviceId;
+    }
+
+    public Set<SettingDTO> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Set<SettingDTO> settings) {
+        this.settings = settings;
     }
 
     @Override

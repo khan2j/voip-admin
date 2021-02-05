@@ -19,7 +19,7 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="voipadminApp.setting.option" for="field_option">Option</label>
-                    <select class="form-control" id="field_option" name="option" formControlName="optionId">
+                    <select class="form-control" id="field_option" name="option" formControlName="option">
                         <option [ngValue]="null"></option>
                         <option [ngValue]="optionOption.id" *ngFor="let optionOption of options; trackBy: trackById">{{ optionOption.code }}</option>
                     </select>

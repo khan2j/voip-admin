@@ -78,7 +78,7 @@ public class Device implements Serializable {
     @Column(name = "notes")
     private String notes;
 
-    @OneToMany(mappedBy = "device")
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Setting> settings = new HashSet<>();
 

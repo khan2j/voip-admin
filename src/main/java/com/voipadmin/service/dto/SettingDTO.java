@@ -8,21 +8,19 @@ import java.util.Set;
  * A DTO for the {@link com.voipadmin.domain.Setting} entity.
  */
 public class SettingDTO implements Serializable {
-    
+
     private Long id;
 
     private String textValue;
 
+    private OptionDTO option;
 
-    private Long optionId;
-
-    private String optionCode;
     private Set<OptionValueDTO> selectedValues = new HashSet<>();
 
     private Long deviceId;
 
     private String deviceMac;
-    
+
     public Long getId() {
         return id;
     }
@@ -39,20 +37,12 @@ public class SettingDTO implements Serializable {
         this.textValue = textValue;
     }
 
-    public Long getOptionId() {
-        return optionId;
+    public OptionDTO getOption() {
+        return option;
     }
 
-    public void setOptionId(Long optionId) {
-        this.optionId = optionId;
-    }
-
-    public String getOptionCode() {
-        return optionCode;
-    }
-
-    public void setOptionCode(String optionCode) {
-        this.optionCode = optionCode;
+    public void setOption(OptionDTO option) {
+        this.option = option;
     }
 
     public Set<OptionValueDTO> getSelectedValues() {
@@ -102,8 +92,6 @@ public class SettingDTO implements Serializable {
         return "SettingDTO{" +
             "id=" + getId() +
             ", textValue='" + getTextValue() + "'" +
-            ", optionId=" + getOptionId() +
-            ", optionCode='" + getOptionCode() + "'" +
             ", selectedValues='" + getSelectedValues() + "'" +
             ", deviceId=" + getDeviceId() +
             ", deviceMac='" + getDeviceMac() + "'" +

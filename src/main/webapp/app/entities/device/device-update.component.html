@@ -12,10 +12,11 @@
 
                             <div class="form-group">
                                 <label class="form-control-label" jhiTranslate="voipadminApp.device.model" for="field_model">Model</label>
-                                <select class="form-control" id="field_model" name="model" formControlName="modelId">
-                                    <option [ngValue]="null"></option>
-                                    <option [ngValue]="deviceModelOption.id" *ngFor="let deviceModelOption of devicemodels; trackBy: trackById">{{ deviceModelOption.name }}</option>
-                                </select>
+                                <ng-select [items]="devicemodels"
+                                           bindLabel="nameWithVendor"
+                                           bindValue="id"
+                                           formControlName="modelId"
+                                           id="field_model" (change)="onDeviceModelChange($event)"></ng-select>
                             </div>
 
                             <div class="form-group">
@@ -198,7 +199,41 @@
                 <li ngbNavItem>
                     <a ngbNavLink>Other Settings</a>
                     <ng-template ngbNavContent>
-                        <div>Other Settings Content</div>
+                        <div class="tab-content">
+                            <div class="other-setting-group" formArrayName="settings">
+                                <fieldset *ngFor="let setting of settings().controls; let i = index;" [formGroupName]="i">
+                                    <legend jhiTranslate="voipadminApp.setting.detail.title">Setting</legend>
+                                    <div>
+                                        <button type="button" class="close" aria-hidden="true" title="Remove"
+                                                (click)="removeSetting(i)">&times;</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" jhiTranslate="voipadminApp.option.detail.title" for="field_option">Option</label>
+                                        <ng-select [items]="options" bindLabel="codeWithDescr" id="field_option" formControlName="option"
+                                                   (change)="onSettingOptionChange($event, i)"></ng-select>
+                                    </div>
+
+                                    <div class="form-group" *ngIf="setting.get('option')?.value?.valueType === 'TEXT'">
+                                        <input type="text" class="form-control" name="value" id="field_textValue" placeholder="Value"
+                                               formControlName="textValue"/>
+                                    </div>
+                                    <div class="form-group" *ngIf="setting.get('option')?.value?.valueType === 'SELECT'">
+                                        <ng-select [items]="settingPossibleValues[i]"
+                                                   bindLabel="value"
+                                                   formControlName="selectedValues"
+                                                   placeholder="Value"
+                                                   [multiple]="setting.get('option')?.value?.multiple"></ng-select>
+                                    </div>
+
+                                </fieldset>
+
+                                <div *ngIf="options.length !== settings().length" class="add-new-setting-button">
+                                    <button type="button" id="add-setting" class="btn btn-secondary" (click)="addSetting()">
+                                        <span jhiTranslate="voipadminApp.setting.action.addNew">Set Another Option</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </ng-template>
                 </li>
             </ul>

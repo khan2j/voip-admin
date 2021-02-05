@@ -29,7 +29,7 @@ export class SettingUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     textValue: [],
-    optionId: [],
+    option: [],
     selectedValues: [],
     deviceId: [],
   });
@@ -59,7 +59,7 @@ export class SettingUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: setting.id,
       textValue: setting.textValue,
-      optionId: setting.optionId,
+      optionId: setting.option,
       selectedValues: setting.selectedValues,
       deviceId: setting.deviceId,
     });
@@ -84,7 +84,7 @@ export class SettingUpdateComponent implements OnInit {
       ...new Setting(),
       id: this.editForm.get(['id'])!.value,
       textValue: this.editForm.get(['textValue'])!.value,
-      optionId: this.editForm.get(['optionId'])!.value,
+      option: this.editForm.get(['option'])!.value,
       selectedValues: this.editForm.get(['selectedValues'])!.value,
       deviceId: this.editForm.get(['deviceId'])!.value,
     };

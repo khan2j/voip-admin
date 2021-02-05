@@ -53,4 +53,7 @@ public interface OptionService {
     void delete(Long id);
 
     List<OptionDTO> findAllByVendorId(Long vendorId);
+
+    List<OptionDTO> findAllByModelId(Long modelId);
+
 }

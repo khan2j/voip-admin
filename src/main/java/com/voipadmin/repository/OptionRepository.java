@@ -30,4 +30,7 @@ public interface OptionRepository extends JpaRepository<Option, Long> {
 
     @Query("SELECT DISTINCT option FROM Option option JOIN fetch option.vendors vendors WHERE vendors.id = :vendorId")
     List<Option> findAllByVendor(@Param("vendorId") Long vendorId);
+
+    @Query("SELECT DISTINCT option FROM Option option JOIN fetch option.models models WHERE models.id = :modelId")
+    List<Option> findAllByModel(@Param("modelId") Long modelId);
 }

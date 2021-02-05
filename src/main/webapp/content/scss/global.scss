@@ -207,3 +207,15 @@ ui bootstrap tweaks
 .vertical-radio-button {
   margin: 5px;
 }
+fieldset {
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+
+  legend {
+    width: inherit;
+    padding: 0 10px;
+    border-bottom: none;
+  }
+}

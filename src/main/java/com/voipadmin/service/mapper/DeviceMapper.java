@@ -9,24 +9,23 @@ import org.mapstruct.*;
 import java.text.MessageFormat;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static liquibase.util.StringUtils.isNotEmpty;
 
 /**
  * Mapper for the entity {@link Device} and its DTO {@link DeviceDTO}.
  */
-@Mapper(componentModel = "spring", uses = {DeviceModelMapper.class, ResponsiblePersonMapper.class})
+@Mapper(componentModel = "spring", uses = {DeviceModelMapper.class, ResponsiblePersonMapper.class, SettingMapper.class})
 public interface DeviceMapper extends EntityMapper<DeviceDTO, Device> {
 
     @Mapping(source = "model.id", target = "modelId")
-    @Mapping(source = "model.name", target = "modelName")
+    @Mapping(source = "model", target = "modelName", qualifiedByName = "modelNameWithVendor")
     @Mapping(source = "responsiblePerson.id", target = "responsiblePersonId")
     @Mapping(source = "responsiblePerson.lastName", target = "responsiblePersonLastName")
     @Mapping(source = "parent.id", target = "parentId")
     @Mapping(source = "mac", target = "mac", qualifiedByName = "plainMacToFormatted")
     DeviceDTO toDto(Device device);
 
-    @Mapping(target = "settings", ignore = true)
-    @Mapping(target = "removeSettings", ignore = true)
     @Mapping(target = "voipAccounts", ignore = true)
     @Mapping(target = "removeVoipAccounts", ignore = true)
     @Mapping(target = "children", ignore = true)
@@ -58,6 +57,12 @@ public interface DeviceMapper extends EntityMapper<DeviceDTO, Device> {
     @Named("formattedMacToPlain")
     public static String formattedMacToPlain(String formattedMac) {
         return formattedMac.replace(":", "").replace("-", "");
+    }
+
+    @Named("modelNameWithVendor")
+    public static String modelNameWithVendor(DeviceModel model) {
+        return nonNull(model) ?
+            model.getVendor().getName() + " " + model.getName() : null;
     }
 
     @AfterMapping

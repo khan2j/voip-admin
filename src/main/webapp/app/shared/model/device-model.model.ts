@@ -16,6 +16,7 @@ export interface IDeviceModel {
   otherDeviceTypeId?: number;
   otherDeviceTypeName?: string;
   options?: IOption[];
+  nameWithVendor?: string;
 }
 
 export class DeviceModel implements IDeviceModel {
@@ -31,7 +32,8 @@ export class DeviceModel implements IDeviceModel {
     public vendorId?: number,
     public deviceType?: DeviceType,
     public otherDeviceTypeId?: number,
-    public options?: IOption[]
+    public options?: IOption[],
+    public nameWithVendor?: string
   ) {
     this.isConfigurable = this.isConfigurable || false;
   }

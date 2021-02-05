@@ -34,8 +34,8 @@
                     <td><a [routerLink]="['/setting', setting.id, 'view']">{{ setting.id }}</a></td>
                     <td>{{ setting.textValue }}</td>
                     <td>
-                        <div *ngIf="setting.optionId">
-                            <a [routerLink]="['/option', setting.optionId , 'view']" >{{ setting.optionCode }}</a>
+                        <div *ngIf="setting.option">
+                            <a [routerLink]="['/option', setting.option , 'view']" >{{ setting.optionCode }}</a>
                         </div>
                     </td>
                     <td>

@@ -12,13 +12,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {OptionMapper.class, OptionValueMapper.class, DeviceMapper.class})
 public interface SettingMapper extends EntityMapper<SettingDTO, Setting> {
 
-    @Mapping(source = "option.id", target = "optionId")
-    @Mapping(source = "option.code", target = "optionCode")
     @Mapping(source = "device.id", target = "deviceId")
     @Mapping(source = "device.mac", target = "deviceMac")
     SettingDTO toDto(Setting setting);
 
-    @Mapping(source = "optionId", target = "option")
     @Mapping(target = "removeSelectedValues", ignore = true)
     @Mapping(source = "deviceId", target = "device")
     Setting toEntity(SettingDTO settingDTO);

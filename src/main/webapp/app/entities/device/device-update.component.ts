@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -12,18 +12,29 @@ import { DeviceModelService } from 'app/entities/device-model/device-model.servi
 import { IResponsiblePerson } from 'app/shared/model/responsible-person.model';
 import { ResponsiblePersonService } from 'app/entities/responsible-person/responsible-person.service';
 import { DeviceValidationService } from 'app/entities/device/device-validation.service';
+import { ISetting, Setting } from 'app/shared/model/setting.model';
+import { IOption } from 'app/shared/model/option.model';
+import { OptionService } from 'app/entities/option/option.service';
+import { IOptionValue } from 'app/shared/model/option-value.model';
+import { DeviceModelVendorChangeDialogComponent } from 'app/entities/device-model/device-model-vendor-change-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 type SelectableEntity = IDeviceModel | IResponsiblePerson | IDevice;
 
 @Component({
   selector: 'jhi-device-update',
   templateUrl: './device-update.component.html',
+  styleUrls: ['./device-update.component.scss'],
 })
 export class DeviceUpdateComponent implements OnInit {
   isSaving = false;
   devicemodels: IDeviceModel[] = [];
   responsiblepeople: IResponsiblePerson[] = [];
   devices: IDevice[] = [];
+  options: IOption[] = [];
+  settingPossibleValues: IOptionValue[][] = [];
+
+  oldModelId: number | undefined;
 
   editForm = this.fb.group({
     id: [],
@@ -53,22 +64,32 @@ export class DeviceUpdateComponent implements OnInit {
     modelId: [],
     responsiblePersonId: [],
     parentId: [],
+    settings: this.fb.array([]),
   });
 
   constructor(
     protected deviceService: DeviceService,
     protected deviceModelService: DeviceModelService,
     protected responsiblePersonService: ResponsiblePersonService,
+    protected optionService: OptionService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private validationService: DeviceValidationService
+    private validationService: DeviceValidationService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ device }) => {
       this.updateForm(device);
 
-      this.deviceModelService.query().subscribe((res: HttpResponse<IDeviceModel[]>) => (this.devicemodels = res.body || []));
+      this.deviceModelService.query().subscribe((res: HttpResponse<IDeviceModel[]>) => {
+        this.devicemodels = res.body
+          ? res.body.map(model => {
+              model.nameWithVendor = `${model.vendorName} ${model.name}`;
+              return model;
+            })
+          : [];
+      });
 
       this.responsiblePersonService
         .query()
@@ -76,6 +97,10 @@ export class DeviceUpdateComponent implements OnInit {
 
       this.deviceService.query().subscribe((res: HttpResponse<IDevice[]>) => (this.devices = res.body || []));
     });
+  }
+
+  settings(): FormArray {
+    return this.editForm.get('settings') as FormArray;
   }
 
   updateForm(device: IDevice): void {
@@ -101,6 +126,11 @@ export class DeviceUpdateComponent implements OnInit {
       responsiblePersonId: device.responsiblePersonId,
       parentId: device.parentId,
     });
+    if (device.modelId) {
+      this.updateModelOptions(device.modelId);
+      this.initSettings(device.settings);
+      this.oldModelId = device.modelId;
+    }
   }
 
   previousState(): void {
@@ -140,6 +170,26 @@ export class DeviceUpdateComponent implements OnInit {
       modelId: this.editForm.get(['modelId'])!.value,
       responsiblePersonId: this.editForm.get(['responsiblePersonId'])!.value,
       parentId: this.editForm.get(['parentId'])!.value,
+      settings: this.settings()
+        .controls.map(settingControl => this.createSettingFromForm(settingControl))
+        .filter(setting => setting.option && (setting.textValue || (setting.selectedValues && setting.selectedValues.length > 0))),
+    };
+  }
+
+  private createSettingFromForm(settingControl: AbstractControl): ISetting {
+    return {
+      ...new Setting(),
+      id: settingControl.get('id')?.value,
+      // optionId: settingControl.get('optionId')?.value?.id,
+      option: settingControl.get('option')?.value,
+      textValue: settingControl.get('textValue')?.value,
+      selectedValues:
+        settingControl.get('option')?.value?.valueType === 'SELECT'
+          ? settingControl.get('option')?.value?.multiple
+            ? settingControl.get('selectedValues')?.value
+            : [settingControl.get('selectedValues')?.value]
+          : null,
+      deviceId: this.editForm.get(['id'])!.value,
     };
   }
 
@@ -163,7 +213,83 @@ export class DeviceUpdateComponent implements OnInit {
     return item.id;
   }
 
-  test(): void {
-    1 + 2;
+  updateModelOptions(modelId: number): void {
+    this.optionService.findByModelId(modelId).subscribe((res: HttpResponse<IOption[]>) => {
+      if (!!res.body && res.body.length > 0) {
+        this.options = res.body.map(option => {
+          option.codeWithDescr = `${option.code} (${option.descr})`;
+          return option;
+        });
+      } else {
+        this.options = [];
+      }
+    });
+  }
+
+  initSettings(settings: ISetting[] | undefined): void {
+    const settingsControls = this.editForm.get('settings') as FormArray;
+    if (settings && settings.length > 0) {
+      settings.forEach((setting: ISetting, index: number) => {
+        if (setting.option) {
+          setting.option.codeWithDescr = `${setting.option.code} (${setting.option.descr})`;
+          this.addPossibleValuesForOption(setting.option, index);
+        }
+        settingsControls.push(
+          this.fb.group({
+            id: [setting.id],
+            textValue: [setting.textValue],
+            selectedValues: [
+              setting?.option?.multiple ? setting.selectedValues : setting.selectedValues ? setting.selectedValues[0] : null,
+            ],
+            option: [setting.option],
+            deviceId: [setting.deviceId],
+          })
+        );
+      });
+    } else {
+      this.addSetting();
+    }
+  }
+
+  onSettingOptionChange(option: IOption, arrayIndex: number): void {
+    this.addPossibleValuesForOption(option, arrayIndex);
+  }
+
+  addSetting(): void {
+    this.settings().push(
+      this.fb.group({
+        id: [],
+        textValue: [],
+        selectedValues: [[]],
+        option: [],
+        deviceId: [this.editForm.get('id')!.value],
+      })
+    );
+  }
+
+  removeSetting(index: number): void {
+    this.settings().removeAt(index);
+  }
+
+  addPossibleValuesForOption(option: IOption, arrayIndex: number): void {
+    if (option.possibleValues) {
+      this.settingPossibleValues[arrayIndex] = option.possibleValues;
+    }
+  }
+
+  onDeviceModelChange(deviceModel: IDeviceModel): void {
+    const modalRef = this.modalService.open(DeviceModelVendorChangeDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.oldValue = this.oldModelId;
+    modalRef.componentInstance.newValue = deviceModel.id;
+    modalRef.result.then(result => {
+      this.editForm.patchValue({
+        modelId: result,
+      });
+      if (result !== this.oldModelId) {
+        this.updateModelOptions(result);
+        this.settings().clear();
+        this.initSettings([]);
+      }
+    });
   }
 }

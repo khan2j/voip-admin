@@ -39,4 +39,8 @@ export class OptionService {
   findByVendorId(vendorId: number): Observable<EntityArrayResponseType> {
     return this.http.get<IOption[]>(`${this.resourceUrl}/byVendor/${vendorId}`, { observe: 'response' });
   }
+
+  findByModelId(modelId: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IOption[]>(`${this.resourceUrl}/byModel/${modelId}`, { observe: 'response' });
+  }
 }

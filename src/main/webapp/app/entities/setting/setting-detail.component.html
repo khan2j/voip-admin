@@ -14,8 +14,8 @@
                 </dd>
                 <dt><span jhiTranslate="voipadminApp.setting.option">Option</span></dt>
                 <dd>
-                    <div *ngIf="setting.optionId">
-                        <a [routerLink]="['/option', setting.optionId, 'view']">{{ setting.optionCode }}</a>
+                    <div *ngIf="setting.option">
+                        <a [routerLink]="['/option', setting.option, 'view']">{{ setting.optionCode }}</a>
                     </div>
                 </dd>
                 <dt><span jhiTranslate="voipadminApp.setting.selectedValues">Selected Values</span></dt>
