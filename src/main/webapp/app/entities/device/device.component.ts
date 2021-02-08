@@ -14,6 +14,7 @@ import { DeviceDeleteDialogComponent } from './device-delete-dialog.component';
 @Component({
   selector: 'jhi-device',
   templateUrl: './device.component.html',
+  styleUrls: ['./device.component.scss'],
 })
 export class DeviceComponent implements OnInit, OnDestroy {
   devices?: IDevice[];
@@ -109,6 +110,11 @@ export class DeviceComponent implements OnInit, OnDestroy {
       });
     }
     this.devices = data || [];
+    this.devices.forEach(device => {
+      if (device.voipAccounts && device.voipAccounts.length > 0) {
+        device.voipAccounts.sort((account1, account2) => account1.lineNumber! - account2.lineNumber!);
+      }
+    });
     this.ngbPaginationPage = this.page;
   }
 

@@ -37,7 +37,7 @@
       "ntpServer": "NTP-Server",
       "notes": "Notes",
       "settings": "Settings",
-      "voipAccounts": "Voip Accounts",
+      "voipAccounts": "VoIP Accounts",
       "children": "Children",
       "model": "Model",
       "responsiblePerson": "Responsible Person",

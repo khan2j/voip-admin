@@ -29,6 +29,7 @@
                     <th scope="col"  jhiSortBy="location"><span jhiTranslate="voipadminApp.device.location">Location</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="dhcpEnabled"><span jhiTranslate="voipadminApp.device.dhcpEnabled">Dhcp Enabled</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="ipAddress"><span jhiTranslate="voipadminApp.device.ipAddress">Ip Address</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"><span jhiTranslate="voipadminApp.device.voipAccounts">VoIP-Accounts</span></th>
                     <th scope="col"  jhiSortBy="provisioningMode"><span jhiTranslate="voipadminApp.device.provisioningMode">Provisioning Mode</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -50,12 +51,24 @@
                     <td>{{ device.location }}</td>
                     <td>{{ device.dhcpEnabled ? 'Yes' : 'No' }}</td>
                     <td>{{ device.ipAddress }}</td>
-                    <td jhiTranslate="{{ 'voipadminApp.ProvisioningMode.' + device.provisioningMode }}">{{ device.provisioningMode }}</td>
                     <td>
-                        <div *ngIf="device.parentId">
-                            <a [routerLink]="['/device', device.parentId , 'view']" >{{ device.parentId }}</a>
+                        <div >
+                            <ol>
+                                <li *ngFor="let voipAccount of device?.voipAccounts">
+                                    <span *ngIf="voipAccount?.username && voipAccount?.lineEnable">
+                                        <strong>{{ voipAccount.username }}</strong>
+                                    </span>
+                                    <span *ngIf="voipAccount?.username && !voipAccount?.lineEnable">
+                                        {{ voipAccount.username }}
+                                    </span>
+                                    <span *ngIf="!voipAccount?.username">
+                                        ---
+                                    </span>
+                                </li>
+                            </ol>
                         </div>
                     </td>
+                    <td jhiTranslate="{{ 'voipadminApp.ProvisioningMode.' + device.provisioningMode }}">{{ device.provisioningMode }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
