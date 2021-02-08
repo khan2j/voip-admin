@@ -6,7 +6,7 @@ export interface IVoipAccount {
   sipServer?: string;
   sipPort?: string;
   lineEnable?: boolean;
-  lineNumber?: string;
+  lineNumber?: number;
   asteriskAccountId?: number;
   deviceMac?: string;
   deviceId?: number;
@@ -21,7 +21,7 @@ export class VoipAccount implements IVoipAccount {
     public sipServer?: string,
     public sipPort?: string,
     public lineEnable?: boolean,
-    public lineNumber?: string,
+    public lineNumber?: number,
     public asteriskAccountId?: number,
     public deviceMac?: string,
     public deviceId?: number

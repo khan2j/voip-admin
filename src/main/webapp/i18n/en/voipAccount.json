@@ -19,12 +19,14 @@
       "manuallyCreated": "Manually Created",
       "username": "Username",
       "password": "Password",
-      "sipServer": "Sip Server",
-      "sipPort": "Sip Port",
+      "sipServer": "SIP-Server",
+      "sipPort": "SIP-Port",
       "lineEnable": "Line Enable",
       "lineNumber": "Line Number",
+      "lineWithNumber": "Line # {{ lineNumber }}",
       "asteriskAccount": "Asterisk Account",
-      "device": "Device"
+      "device": "Device",
+      "singleSipServer": "Single SIP-Server"
     }
   }
 }

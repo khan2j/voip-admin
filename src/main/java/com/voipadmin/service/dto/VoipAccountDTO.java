@@ -7,7 +7,7 @@ import java.io.Serializable;
  * A DTO for the {@link com.voipadmin.domain.VoipAccount} entity.
  */
 public class VoipAccountDTO implements Serializable {
-    
+
     private Long id;
 
     private Boolean manuallyCreated;
@@ -23,7 +23,7 @@ public class VoipAccountDTO implements Serializable {
 
     private Boolean lineEnable;
 
-    private String lineNumber;
+    private Integer lineNumber;
 
 
     private Long asteriskAccountId;
@@ -31,7 +31,7 @@ public class VoipAccountDTO implements Serializable {
     private Long deviceId;
 
     private String deviceMac;
-    
+
     public Long getId() {
         return id;
     }
@@ -88,11 +88,11 @@ public class VoipAccountDTO implements Serializable {
         this.lineEnable = lineEnable;
     }
 
-    public String getLineNumber() {
+    public Integer getLineNumber() {
         return lineNumber;
     }
 
-    public void setLineNumber(String lineNumber) {
+    public void setLineNumber(Integer lineNumber) {
         this.lineNumber = lineNumber;
     }
 

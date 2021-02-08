@@ -28,7 +28,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let deviceModel of deviceModels ;trackBy: trackId">
-                    <td><a [routerLink]="['/device-model', deviceModel.id, 'view']">{{ deviceModel.name }}</a></td>
+                    <td><a [routerLink]="['/device-model', deviceModel.id, 'view']">{{ deviceModel.vendorName + ' ' + deviceModel.name }}</a></td>
                     <td>{{ deviceModel.isConfigurable ? 'Yes' : 'No' }}</td>
                     <td>{{ deviceModel.linesCount }}</td>
                     <td *ngIf="deviceModel.deviceType !== 'OTHER'" jhiTranslate="{{ 'voipadminApp.DeviceType.' + deviceModel.deviceType }}"></td>

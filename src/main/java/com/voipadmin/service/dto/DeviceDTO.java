@@ -59,6 +59,8 @@ public class DeviceDTO implements Serializable {
 
     private Long parentId;
 
+    private Set<VoipAccountDTO> voipAccounts;
+
     private Set<SettingDTO> settings;
 
     public Long getId() {
@@ -251,6 +253,14 @@ public class DeviceDTO implements Serializable {
 
     public void setSettings(Set<SettingDTO> settings) {
         this.settings = settings;
+    }
+
+    public Set<VoipAccountDTO> getVoipAccounts() {
+        return voipAccounts;
+    }
+
+    public void setVoipAccounts(Set<VoipAccountDTO> voipAccounts) {
+        this.voipAccounts = voipAccounts;
     }
 
     @Override

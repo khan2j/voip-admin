@@ -27,8 +27,7 @@ public class VoipAccount implements Serializable {
     @Column(name = "manually_created")
     private Boolean manuallyCreated;
 
-    @NotNull
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
     @Column(name = "password")
@@ -44,7 +43,7 @@ public class VoipAccount implements Serializable {
     private Boolean lineEnable;
 
     @Column(name = "line_number")
-    private String lineNumber;
+    private Integer lineNumber;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -141,16 +140,16 @@ public class VoipAccount implements Serializable {
         this.lineEnable = lineEnable;
     }
 
-    public String getLineNumber() {
+    public Integer getLineNumber() {
         return lineNumber;
     }
 
-    public VoipAccount lineNumber(String lineNumber) {
+    public VoipAccount lineNumber(Integer lineNumber) {
         this.lineNumber = lineNumber;
         return this;
     }
 
-    public void setLineNumber(String lineNumber) {
+    public void setLineNumber(Integer lineNumber) {
         this.lineNumber = lineNumber;
     }
 

@@ -15,7 +15,9 @@ import static liquibase.util.StringUtils.isNotEmpty;
 /**
  * Mapper for the entity {@link Device} and its DTO {@link DeviceDTO}.
  */
-@Mapper(componentModel = "spring", uses = {DeviceModelMapper.class, ResponsiblePersonMapper.class, SettingMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {DeviceModelMapper.class, ResponsiblePersonMapper.class, SettingMapper.class, VoipAccountMapper.class})
 public interface DeviceMapper extends EntityMapper<DeviceDTO, Device> {
 
     @Mapping(source = "model.id", target = "modelId")
@@ -26,8 +28,7 @@ public interface DeviceMapper extends EntityMapper<DeviceDTO, Device> {
     @Mapping(source = "mac", target = "mac", qualifiedByName = "plainMacToFormatted")
     DeviceDTO toDto(Device device);
 
-    @Mapping(target = "voipAccounts", ignore = true)
-    @Mapping(target = "removeVoipAccounts", ignore = true)
+    @Mapping(source = "voipAccounts", target = "voipAccounts")
     @Mapping(target = "children", ignore = true)
     @Mapping(target = "removeChildren", ignore = true)
     @Mapping(source = "modelId", target = "model")

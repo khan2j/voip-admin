@@ -50,8 +50,8 @@ public class VoipAccountResourceIT {
     private static final Boolean DEFAULT_LINE_ENABLE = false;
     private static final Boolean UPDATED_LINE_ENABLE = true;
 
-    private static final String DEFAULT_LINE_NUMBER = "AAAAAAAAAA";
-    private static final String UPDATED_LINE_NUMBER = "BBBBBBBBBB";
+    private static final int DEFAULT_LINE_NUMBER = 1;
+    private static final int UPDATED_LINE_NUMBER = 2;
 
     @Autowired
     private VoipAccountRepository voipAccountRepository;
@@ -194,7 +194,7 @@ public class VoipAccountResourceIT {
             .andExpect(jsonPath("$.[*].lineEnable").value(hasItem(DEFAULT_LINE_ENABLE.booleanValue())))
             .andExpect(jsonPath("$.[*].lineNumber").value(hasItem(DEFAULT_LINE_NUMBER)));
     }
-    
+
     @Test
     @Transactional
     public void getVoipAccount() throws Exception {
