@@ -1,5 +1,7 @@
 package com.voipadmin.service.impl;
 
+import com.voipadmin.service.ConfigurationBuilderService;
+import com.voipadmin.service.DeviceConfigurationWriterService;
 import com.voipadmin.service.DeviceService;
 import com.voipadmin.domain.Device;
 import com.voipadmin.repository.DeviceRepository;
@@ -28,16 +30,32 @@ public class DeviceServiceImpl implements DeviceService {
 
     private final DeviceMapper deviceMapper;
 
-    public DeviceServiceImpl(DeviceRepository deviceRepository, DeviceMapper deviceMapper) {
+    private final ConfigurationBuilderService configurationBuilderService;
+    private final DeviceConfigurationWriterService deviceConfigurationWriterService;
+
+    public DeviceServiceImpl(
+        DeviceRepository deviceRepository,
+        DeviceMapper deviceMapper,
+        ConfigurationBuilderService configurationBuilderService,
+        DeviceConfigurationWriterService deviceConfigurationWriterService
+    ) {
         this.deviceRepository = deviceRepository;
         this.deviceMapper = deviceMapper;
+        this.configurationBuilderService = configurationBuilderService;
+        this.deviceConfigurationWriterService = deviceConfigurationWriterService;
     }
 
     @Override
     public DeviceDTO save(DeviceDTO deviceDTO) {
         log.debug("Request to save Device : {}", deviceDTO);
         Device device = deviceMapper.toEntity(deviceDTO);
+        device.setMac(device.getMac().toLowerCase());
         device = deviceRepository.save(device);
+        deviceConfigurationWriterService.writeConfig(
+            configurationBuilderService.buildConfig(device),
+            configurationBuilderService.getFileName(device),
+            device.getProvisioningMode()
+        );
         return deviceMapper.toDto(device);
     }
 
@@ -63,4 +81,17 @@ public class DeviceServiceImpl implements DeviceService {
         log.debug("Request to delete Device : {}", id);
         deviceRepository.deleteById(id);
     }
+
+    @Override
+    public String getConfig(String mac) {
+        Optional<Device> optionalDevice = findByMac(mac);
+        return optionalDevice.map(configurationBuilderService::buildConfig).orElse(null);
+    }
+
+    @Override
+    public Optional<Device> findByMac(String mac) {
+        return deviceRepository.findByMacEquals(mac);
+    }
+
+
 }

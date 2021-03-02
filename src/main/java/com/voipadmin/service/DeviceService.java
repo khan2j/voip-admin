@@ -1,5 +1,6 @@
 package com.voipadmin.service;
 
+import com.voipadmin.domain.Device;
 import com.voipadmin.service.dto.DeviceDTO;
 
 import org.springframework.data.domain.Page;
@@ -43,4 +44,8 @@ public interface DeviceService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    String getConfig(String mac);
+
+    Optional<Device> findByMac(String mac);
 }
